@@ -1,0 +1,65 @@
+/* =================== CSS VARIABLES ===================== */
+:root {
+    /* Color Variables */
+    --color-primary: #1E1E1E;
+    --color-primary-variant: #000000;
+    --bg-color: #f3f3f3;
+    --color-secondary: #267EAA;
+    --text-color: #000;
+    --text-color-variant: #fff;
+    --hero-text-color: #f3f3f3;
+    --bg-color-variant: #B2B2B2;
+
+    /* Transition Variables */
+    --transition: all 300ms ease;
+    --transition-slow: all 1s ease;
+
+    /* ======== FONT and Typography ========= */
+    --body-font: 'Arial', sans-serif;
+    --alternative-font: 'Montserrat', sans-serif;
+
+    /* .5rem = 8px, 1rem = 16px, 1.5rem = 24px, ...*/
+    --hero-title: 4.75rem;
+    --title: 3rem --hero-subtitle: 1.4rem;
+    --subtitle: 1.6rem;
+    --logo: 2rem;
+    --product-title: 2rem;
+    --hero-title-small: 2.6rem;
+    --hero-subtitle-small: 1.6rem;
+    --title-small: 2rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .813rem;
+
+    /* ======== FONT WEIGHT ========= */
+    --font-medium: 500;
+    --font-semi-bold: 600;
+    --font-bold: 700;
+}
+
+/* =========== GENERAL ============== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.container {
+    width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.container-alt {
+    width: 1640px;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
