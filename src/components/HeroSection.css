@@ -1,0 +1,78 @@
+.hero-section {
+    position: relative;
+    width: 100%;
+    margin-bottom: 200px;
+}
+
+.hero-section svg {
+    position: absolute;
+    right: 0;
+    z-index: -1;
+}
+
+.hero-section__container {
+    height: 1391px;
+    color: var(--hero-text-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.hero-section__text {
+    padding-top: 162px;
+}
+
+.hero-section__title {
+    font-size: var(--hero-title);
+    width: 660px;
+}
+
+.hero-section__title-black {
+    color: var(--color-primary-variant);
+}
+
+.hero-section__subtitle {
+    font-size: var(--hero-subtitle);
+    color: rgba(217, 217, 217, 0.80);
+    width: 480px;
+    font-weight: 600;
+}
+
+.hero-section__buttons {
+    margin-top: 2.2rem;
+    margin-left: .5rem;
+    display: flex;
+}
+
+.hero-section__button {
+    height: 68px;
+    width: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: var(--font-semi-bold);
+    color: var(--hero-text-color);
+    background-color: var(--color-secondary);
+    margin-right: 2.4rem;
+    cursor: pointer;
+}
+
+.hero-section__button:hover {
+    background-color: var(--color-secondary-lighter);
+    transition: var(--transition);
+}
+
+.unfill {
+    background-color: transparent;
+    border: 3px solid var(--color-secondary);
+}
+
+.unfill:hover {
+    background-color: var(--color-secondary);
+}
+
+.hero-section__image {
+    width: 100%;
+    margin-top: 200px;
+    position: relative;
+}
