@@ -8,6 +8,7 @@
     --color-secondary-lighter: #2c97cc;
     --text-color: #000;
     --text-color-variant: #fff;
+    --text-color-gray: #B2B2B2;
     --hero-text-color: #f3f3f3;
     --bg-color-variant: #B2B2B2;
 
@@ -75,4 +76,59 @@ ul {
 img {
     object-fit: contain;
     width: 100%;
+}
+
+/* =========== BUTTONS ============== */
+
+.button--black {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-bold);
+    background-color: var(--color-primary);
+    color: var(--text-color-variant);
+    box-shadow: -1px 3px 4px 1px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.button--black:hover {
+    transition: var(--transition);
+    background-color: var(--color-primary-variant);
+}
+
+.unfill--black {
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--color-primary);
+
+}
+
+.unfill--black:hover {
+    background-color: var(--color-primary);
+    color: var(--text-color-variant);
+}
+
+
+.button--blue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: var(--font-semi-bold);
+    cursor: pointer;
+    background-color: var(--color-secondary);
+    box-shadow: -1px 3px 4px 1px rgba(0, 0, 0, 0.3);
+}
+
+.button--blue:hover {
+    background-color: var(--color-secondary-lighter);
+    transition: var(--transition);
+}
+
+.unfill--blue {
+    background-color: transparent;
+    border: 2px solid var(--color-secondary);
+}
+
+.unfill--blue:hover {
+    background-color: var(--color-secondary);
 }

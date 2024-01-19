@@ -46,29 +46,10 @@
 .hero-section__button {
     height: 68px;
     width: 220px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 1.2rem;
-    font-weight: var(--font-semi-bold);
-    color: var(--hero-text-color);
-    background-color: var(--color-secondary);
     margin-right: 2.4rem;
-    cursor: pointer;
-}
-
-.hero-section__button:hover {
-    background-color: var(--color-secondary-lighter);
-    transition: var(--transition);
-}
-
-.unfill {
-    background-color: transparent;
-    border: 3px solid var(--color-secondary);
-}
-
-.unfill:hover {
-    background-color: var(--color-secondary);
+    box-shadow: none;
+    color: var(--hero-text-color);
 }
 
 .hero-section__image {

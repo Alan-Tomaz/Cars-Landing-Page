@@ -14,8 +14,8 @@ function HeroSection() {
                     <h1 className='hero-section__title'>Buying and <br />Selling <span className='hero-section__title-black'>Vehicles.</span></h1>
                     <h3 className='hero-section__subtitle'>With a wide range of vehicles available, we can help you find the perfect vehicle for your needs.</h3>
                     <div className="hero-section__buttons">
-                        <Link to="/products" className="hero-section__button">Our Products</Link>
-                        <Link to="/contact" className="hero-section__button unfill">Contact Us</Link>
+                        <Link to="/products" className="button--blue hero-section__button">Our Products</Link>
+                        <Link to="/contact" className="button--blue unfill--blue hero-section__button ">Contact Us</Link>
                     </div>
                 </div>
                 <div className="hero-section__image">
