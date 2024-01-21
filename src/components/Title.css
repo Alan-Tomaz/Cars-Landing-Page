@@ -1,0 +1,21 @@
+.title {
+    margin-top: 180px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 144px;
+}
+
+.page__title {
+    font-size: var(--hero-title);
+    text-align: center;
+    margin-bottom: 90px;
+}
+
+.page__row {
+    width: 40%;
+    border: none;
+    height: 1px;
+    background-color: var(--text-color);
+}

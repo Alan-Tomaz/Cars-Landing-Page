@@ -46,7 +46,7 @@
 .product-slider__button {
     width: 160px;
     height: 50px;
-    color: inherit;
+    color: var(--text-color-variant);
 }
 
 .button--active {

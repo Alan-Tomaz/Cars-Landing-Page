@@ -1,0 +1,94 @@
+.products__slider {
+    color: var(--text-color-variant);
+}
+
+.products__section {
+    width: 100%;
+}
+
+.products__section-title {
+    font-size: var(--title);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.products-container {
+    display: flex;
+    gap: 1rem;
+
+}
+
+.products-container .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 200px;
+}
+
+.products-container .filter {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-primary);
+    color: var(--text-color-variant);
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.products-container .filter h6 {
+    font-size: 12px;
+}
+
+.products-container .filter input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    width: 100%;
+    background: transparent;
+}
+
+.products-container .filter input[type="range"]::-webkit-slider-runnable-track {
+    background: var(--color-secondary);
+    height: 0.3rem;
+}
+
+.products-container .filter input[type="range"]::-moz-range-track {
+    background: var(--color-secondary);
+    height: 0.3rem;
+}
+
+.products-container .filter input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    margin-top: -5px;
+    /* Centers thumb on the track */
+    background-color: #5cd5eb;
+    height: .9rem;
+    width: .9rem;
+    border-radius: 100%;
+}
+
+.products-container .filter input[type="range"]::-moz-range-thumb {
+    margin-top: -5px;
+    background-color: #5cd5eb;
+    height: .9rem;
+    width: .9rem;
+    border-radius: 100%;
+    border: none;
+    /*Removes extra border that FF applies*/
+}
+
+/***** Chrome, Safari, Opera, and Edge Chromium *****/
+.products-container .filter input[type="range"]:focus::-webkit-slider-thumb {
+    outline: 2px solid var(--text-color-variant);
+
+}
+
+/******** Firefox ********/
+.products-container .filter input[type="range"]:focus::-moz-range-thumb {
+    outline: 2px solid var(--text-color-variant);
+}
+
+.products-container .filter span {
+    font-size: 12px;
+}
