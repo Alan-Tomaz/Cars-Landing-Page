@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../components/Title';
 import ProductSlider from '../components/ProductSlider';
 import { IoStarOutline } from "react-icons/io5";
@@ -9,8 +9,219 @@ import Bmw from '../images/cars/bmw_m2.png';
 import { Link } from 'react-router-dom';
 import { MdNavigateNext } from "react-icons/md";
 import './Products.css';
+import { NumericFormat } from "react-number-format";
 
 function Products() {
+
+    const [stars1, setStars1] = useState([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+    const [stars2, setStars2] = useState([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+    const [stars3, setStars3] = useState([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+    const [stars4, setStars4] = useState([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+    const [stars5, setStars5] = useState([<IoStarOutline className='rating' />])
+    const [isFiltring, setIsFiltring] = useState();
+
+    const [price, setPrice] = useState(10000);
+
+    const handleMouseEnter = (e) => {
+        const div = e.currentTarget.innerHTML;
+        const starsLength = ((div.split('</svg')).length) - 1;
+        switch (starsLength) {
+            case 5:
+                if (isFiltring != 5) {
+                    setStars1([<IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />])
+                }
+                break;
+            case 4:
+                if (isFiltring != 4) {
+                    setStars2([<IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />])
+                    break;
+                }
+            case 3:
+                if (isFiltring != 3) {
+                    setStars3([<IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />])
+                    break;
+                }
+            case 2:
+                if (isFiltring != 2) {
+                    setStars4([<IoStar className='rating' />, <IoStar className='rating' />])
+                    break;
+                }
+            case 1:
+                if (isFiltring != 1) {
+                    setStars5([<IoStar className='rating' />])
+                    break;
+                }
+        }
+    }
+
+    const handleMouseLeave = (e) => {
+        const div = e.currentTarget.innerHTML;
+        const starsLength = ((div.split('</svg')).length) - 1;
+        switch (starsLength) {
+            case 5:
+                if (isFiltring != 5) {
+                    setStars1([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                    break;
+                }
+            case 4:
+                if (isFiltring != 4) {
+                    setStars2([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                    break;
+                }
+            case 3:
+                if (isFiltring != 3) {
+                    setStars3([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                    break;
+                }
+            case 2:
+                if (isFiltring != 2) {
+                    setStars4([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                    break;
+                }
+            case 1:
+                if (isFiltring != 1) {
+                    setStars5([<IoStarOutline className='rating' />])
+                    break;
+                }
+        }
+    }
+
+    const handleClick = (e) => {
+        const div = e.currentTarget.innerHTML;
+        const starsLength = ((div.split('</svg')).length) - 1;
+
+        setIsFiltring(starsLength);
+        switch (starsLength) {
+            case 5:
+                setStars1([<IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />])
+                setStars2([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars3([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars4([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars5([<IoStarOutline className='rating' />])
+                break;
+            case 4:
+                setStars1([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars2([<IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />])
+                setStars3([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars4([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars5([<IoStarOutline className='rating' />])
+                break;
+            case 3:
+                setStars1([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars2([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars3([<IoStar className='rating' />, <IoStar className='rating' />, <IoStar className='rating' />])
+                setStars4([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars5([<IoStarOutline className='rating' />])
+                break;
+
+            case 2:
+                setStars1([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars2([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars3([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars4([<IoStar className='rating' />, <IoStar className='rating' />])
+                setStars5([<IoStarOutline className='rating' />])
+                break;
+
+            case 1:
+                setStars1([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars2([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars3([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars4([<IoStarOutline className='rating' />, <IoStarOutline className='rating' />])
+                setStars5([<IoStar className='rating' />])
+                break;
+        }
+
+    }
+
+    const handleChangePrice = (e) => {
+        setPrice(e.target.value);
+    }
+
+    useEffect(() => {
+        var x, i, j, m, ll, selElmnt, a, b, c;
+        /*look for any elements with the class "custom-select":*/
+        x = document.getElementsByClassName("custom-select");
+        m = x.length;
+        for (i = 0; i < m; i++) {
+            selElmnt = x[i].getElementsByTagName("select")[0];
+            ll = selElmnt.length;
+            /*for each element, create a new DIV that will act as the selected item:*/
+
+            if (!x[i].querySelector('.select-selected') && !x[i].querySelector('.select-items')) {
+
+                a = document.createElement("DIV");
+                a.setAttribute("class", "select-selected");
+                a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+                x[i].appendChild(a);
+                /*for each element, create a new DIV that will contain the option list:*/
+                b = document.createElement("DIV");
+                b.setAttribute("class", "select-items select-hide");
+                for (j = 1; j < ll; j++) {
+                    /*for each option in the original select element,
+                    create a new DIV that will act as an option item:*/
+                    c = document.createElement("DIV");
+                    c.innerHTML = selElmnt.options[j].innerHTML;
+                    c.addEventListener("click", function (e) {
+                        /*when an item is clicked, update the original select box,
+                        and the selected item:*/
+                        var y, k, l, s, h, sl, yl;
+                        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                        sl = s.length;
+                        h = this.parentNode.previousSibling;
+                        for (k = 0; k < sl; k++) {
+                            if (s.options[k].innerHTML === this.innerHTML) {
+                                s.selectedIndex = k;
+                                h.innerHTML = this.innerHTML;
+                                y = this.parentNode.getElementsByClassName("same-as-selected");
+                                yl = y.length;
+                                for (l = 0; l < yl; l++) {
+                                    y[l].removeAttribute("class");
+                                }
+                                this.setAttribute("class", "same-as-selected");
+                                break;
+                            }
+                        }
+                        h.click();
+                    });
+                    b.appendChild(c);
+                }
+                x[i].appendChild(b);
+                a.addEventListener("click", function (e) {
+                    /*when the select box is clicked, close any other select boxes,
+                    and open/close the current select box:*/
+                    e.stopPropagation();
+                    closeAllSelect(this);
+                    this.nextSibling.classList.toggle("select-hide");
+                    this.classList.toggle("select-arrow-active");
+                });
+            }
+        }
+        function closeAllSelect(elmnt) {
+            /*a function that will close all select boxes in the document,
+            except the current select box:*/
+            var x, y, i, xl, yl, arrNo = [];
+            x = document.getElementsByClassName("select-items");
+            y = document.getElementsByClassName("select-selected");
+            xl = x.length;
+            yl = y.length;
+            for (i = 0; i < yl; i++) {
+                if (elmnt === y[i]) {
+                    arrNo.push(i)
+                } else {
+                    y[i].classList.remove("select-arrow-active");
+                }
+            }
+            for (i = 0; i < xl; i++) {
+                if (arrNo.indexOf(i)) {
+                    x[i].classList.add("select-hide");
+                }
+            }
+        }
+        /*if the user clicks anywhere outside the select box,
+        then close all select boxes:*/
+        document.addEventListener("click", closeAllSelect);
+    }, [])
+
     return (
         <div>
             <Title title="PRODUCTS" />
@@ -21,67 +232,97 @@ function Products() {
                     <div className="filters">
                         <div className="filter filter__price">
                             <h6>Filter By Price</h6>
-                            <input type="range" name="price-filter" id="price-filter" min="10.000,00" max="1.000.000,00" step="100,00" />
-                            <span>Price: US$10.000,00 - US$1.000.000,00</span>
+                            <input type="range" name="price-filter" id="price-filter" min={10000} max={1000000} step={100} onChange={handleChangePrice} />
+                            <span>Min Price: <NumericFormat value={price} thousandSeparator="," displayType='text' /></span>
                         </div>
                         <div className="filter filter__ratings">
                             <h6>Ratings</h6>
-                            <div className="ratings">
-                                <IoStarOutline />
-                                <IoStarOutline />
-                                <IoStarOutline />
-                                <IoStarOutline />
-                                <IoStarOutline />
+                            <div className="ratings-box" >
+                                <div className="ratings rating-1" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+                                    {stars1.map(star => (
+                                        star
+                                    ))}
+                                </div>
                                 <span>(1)</span>
                             </div>
-                            <div className="ratings">
-                                <IoStarOutline />
-                                <IoStarOutline />
-                                <IoStarOutline />
-                                <IoStarOutline />
+                            <div className="ratings-box" >
+                                <div className="ratings rating-2" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+                                    {stars2.map((star, index) => (
+                                        star
+                                    ))}
+                                </div>
                                 <span>(1)</span>
                             </div>
-                            <div className="ratings">
-                                <IoStarOutline />
-                                <IoStarOutline />
-                                <IoStarOutline />
+                            <div className="ratings-box" >
+                                <div className="ratings rating-3" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+                                    {stars3.map(star => (
+                                        star
+                                    ))}
+                                </div>
                                 <span>(1)</span>
                             </div>
-                            <div className="ratings">
-                                <IoStarOutline />
-                                <IoStarOutline />
+                            <div className="ratings-box" >
+                                <div className="ratings rating-4" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+                                    {stars4.map(star => (
+                                        star
+                                    ))}
+                                </div>
                                 <span>(1)</span>
                             </div>
-                            <div className="ratings">
-                                <IoStarOutline />
+                            <div className="ratings-box" >
+                                <div className="ratings rating-5" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleClick}>
+                                    {stars5.map(star => (
+                                        star
+                                    ))}
+                                </div>
                                 <span>(1)</span>
                             </div>
                         </div>
                         <div className="filter filter__brands">
                             <h6>Brands</h6>
-                            <input type="checkbox" name="hyundai" id="hyundai" value="hyundai" />
-                            <label htmlFor="hyundai">Hyundai</label>
-                            <input type="checkbox" name="honda" id="honda" value="honda" />
-                            <label htmlFor="honda">Honda</label>
-                            <input type="checkbox" name="bmw" id="bmw" value="bmw" />
-                            <label htmlFor="bmw">BMW</label>
-                            <input type="checkbox" name="nissan" id="nissan" value="nissan" />
-                            <label htmlFor="nissan">Nissan</label>
-                            <input type="checkbox" name="ford" id="ford" value="ford" />
-                            <label htmlFor="ford">Ford</label>
+
+                            <label htmlFor="hyundai" className='brand'>Hyundai
+                                <input type="checkbox" name="hyundai" id="hyundai" value="hyundai" />
+                                <span></span>
+                            </label>
+                            <label htmlFor="honda" className='brand'>Honda
+                                <input type="checkbox" name="honda" id="honda" value="honda" />
+                                <span></span>
+                            </label>
+                            <label htmlFor="bmw" className='brand'>BMW
+                                <input type="checkbox" name="bmw" id="bmw" value="bmw" />
+                                <span></span>
+                            </label>
+                            <label htmlFor="nissan" className='brand'>Nissan
+                                <input type="checkbox" name="nissan" id="nissan" value="nissan" />
+                                <span></span>
+                            </label>
+                            <label htmlFor="ford" className='brand'>Ford
+                                <input type="checkbox" name="ford" id="ford" value="ford" />
+                                <span></span>
+                            </label>
                         </div>
                     </div>
                     <div className="products">
-                        <div className="products__search">
-                            <select name="cars-types" id="cars-types">
-                                <option value="">All</option>
-                                <option value="cars">Cars</option>
-                                <option value="motos">Motorcycles</option>
-                                <option value="tunneds">Tunneds</option>
-                            </select>
-                            <input type="text" />
-                            <FaSearch />
-                            <span>Showing 1-12 of 32 Results</span>
+                        <div className="products__search ">
+                            <div className="custom-select" id='custom-select'>
+                                <select name="cars-types" id="cars-types">
+                                    <option value="" selected>All</option>
+                                    <option value="all">All</option>
+                                    <option value="cars">Cars</option>
+                                    <option value="motos">Motorcycles</option>
+                                    <option value="tunneds">Tunneds</option>
+                                </select>
+                            </div>
+                            <form className='search-form'>
+                                <label htmlFor="search-input" className='search-input__box'>
+                                    <input type="text" className='search-input' name='search-input' id='search-input' />
+                                    <button className='search__button' type='submit'>
+                                        <FaSearch className='search-icon' />
+                                    </button>
+                                    <span className='search__results'>Showing 1-12 of 32 Results</span>
+                                </label>
+                            </form>
                         </div>
                         <div className="products__list">
                             <div className="product__item">
@@ -98,18 +339,454 @@ function Products() {
                                 <span className='product__price'>US$ 250.000,00</span>
                                 <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
                             </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
+                            <div className="product__item">
+                                <img src={Bmw} alt="Bmw M2" />
+                                <h6 className="product__brand">BMW</h6>
+                                <h5 className='product__name'>BMW M2</h5>
+                                <div className="product__ratings">
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStar />
+                                    <IoStarHalf />
+                                    <IoStarOutline />
+                                </div>
+                                <span className='product__price'>US$ 250.000,00</span>
+                                <Link to="/product/:14" className='button--blue product__button'>See More...</Link>
+                            </div>
                         </div>
                         <div className="products__pages">
-                            <Link to="/products">1</Link>
-                            <Link to="/products">2</Link>
-                            <Link to="/products">3</Link>
-                            <Link to="/products">4</Link>
-                            <Link to="/products">NEXT <span><MdNavigateNext /></span></Link>
+                            <div className="pages">
+                                <Link to="/products">1</Link>
+                                <Link to="/products">2</Link>
+                                <Link to="/products">3</Link>
+                                <Link to="/products">4</Link>
+                                <Link to="/products">NEXT <span className='page-next'><MdNavigateNext /></span></Link>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     )
 }
 

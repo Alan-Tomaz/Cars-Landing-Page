@@ -15,14 +15,13 @@
 .products-container {
     display: flex;
     gap: 1rem;
-
 }
 
 .products-container .filters {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    width: 200px;
+    min-width: 200px;
 }
 
 .products-container .filter {
@@ -32,11 +31,15 @@
     color: var(--text-color-variant);
     padding: 1rem;
     gap: 1rem;
+    width: 100%;
 }
 
 .products-container .filter h6 {
     font-size: 12px;
 }
+
+/* ============== INPUT RANGE STYLE ============ */
+/* BEGIN */
 
 .products-container .filter input[type="range"] {
     -webkit-appearance: none;
@@ -91,4 +94,285 @@
 
 .products-container .filter span {
     font-size: 12px;
+}
+
+/* END */
+
+.filter__ratings .ratings-box,
+.filter__ratings .ratings {
+    display: flex;
+    gap: .2rem;
+}
+
+.filter__ratings .ratings {
+    color: #FAFF00;
+    cursor: pointer;
+}
+
+.filter__brands .brand {
+    display: inline-block;
+    width: fit-content;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    padding-left: 20px;
+}
+
+.filter__brands .brand input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.filter__brands .brand span {
+    height: 15px;
+    width: 15px;
+    background-color: transparent;
+    border: 1px solid var(--text-color-variant);
+    position: absolute;
+    top: 2px;
+    left: 0;
+}
+
+.filter__brands .brand input:checked~span {
+    background-color: var(--text-color-variant);
+}
+
+.filter__brands .brand span::after {
+    content: "";
+    display: none;
+    position: absolute;
+}
+
+/* Show the checkmark when checked */
+.filter__brands .brand input:checked~span::after {
+    display: block;
+}
+
+.filter__brands .brand span::after {
+    left: 3px;
+    top: -1px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--text-color);
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.products {
+    width: 100%;
+}
+
+.products__search {
+    height: 2.5rem;
+    border: 2px solid var(--color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .5rem;
+}
+
+/* ============== SELECT STYLE ============ */
+/* START */
+
+.custom-select {
+    position: relative;
+    width: 140px;
+    font-size: 14px;
+}
+
+.custom-select select {
+    display: none;
+    /*hide original SELECT element:*/
+}
+
+.select-selected,
+.select-items div {
+    background-color: var(--color-primary);
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 12px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,
+.select-selected {
+    color: #ffffff;
+    padding: 0 8px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: var(--color-secondary);
+}
+
+/* END */
+
+.products__search .search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.products__search .search-input__box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: .1rem;
+}
+
+.products__search .search-input {
+    width: 100%;
+    height: 100%;
+    padding: .5rem .5rem .5rem .5rem;
+    font-size: .9rem;
+}
+
+.products__search .search-input:focus {
+    outline: none;
+}
+
+.products__search .search__button {
+    padding: 0 .5rem 0 0;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.products__search .search__button:hover {
+    opacity: .7;
+}
+
+.products__search .search__button:active {
+    opacity: 1;
+}
+
+.products__search .search-icon {
+    width: 20px;
+    height: auto;
+}
+
+.products__search .search__results {
+    font-size: .8rem;
+}
+
+.products__list {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    gap: 40px;
+}
+
+.product__item {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    padding: 1rem .8rem;
+    gap: .5rem;
+    border: 1px solid var(--color-primary);
+}
+
+
+.product__item .product__brand {
+    opacity: .8;
+    font-size: .7rem;
+}
+
+.product__item .product__name {
+    font-size: .9rem
+}
+
+.product__item .product__ratings {
+    color: #e8ec00;
+}
+
+.product__item .product__price {
+    font-size: .9rem;
+    font-weight: var(--font-bold);
+}
+
+.product__item .product__button {
+    width: 100%;
+    height: 45px;
+    color: var(--text-color-variant);
+}
+
+.products__pages {
+    display: flex;
+    justify-content: center;
+    margin: 100px 0;
+    width: 100%;
+}
+
+.products__pages .pages {
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+}
+
+.products__pages .pages a {
+    padding: .2rem;
+    min-width: 35px;
+    height: 35px;
+    background-color: var(--color-primary);
+    color: var(--text-color-variant);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.products__pages .pages a .page-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
