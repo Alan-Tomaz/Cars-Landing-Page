@@ -57,3 +57,68 @@
     margin-top: 200px;
     position: relative;
 }
+
+/* ============== MEDIA QUERIES =============== */
+/* Medium Devices = 1024px  */
+
+@media screen and (max-width: 1024px) {
+
+    .hero-section__title {
+        font-size: var(--hero-title);
+        width: 400px;
+    }
+
+    .hero-section__subtitle {
+        width: 400px;
+    }
+
+    .hero-section__button {
+        width: 150px;
+        font-size: 1rem;
+        height: 50px;
+    }
+
+}
+
+/* Small Devices = 600 */
+
+@media screen and (max-width:600px) {
+    .hero-section__container {
+        height: 100%;
+        flex-direction: column;
+        justify-content: baseline;
+        gap: 2rem;
+    }
+
+    .hero-section__text {
+        padding-top: 100px;
+    }
+
+    .hero-section__image {
+        margin-top: 20px;
+        width: 95%;
+    }
+
+    .hero-section__title {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-section__subtitle {
+        width: 100%;
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    .hero-section__buttons {
+        display: flex;
+        margin-left: initial;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .hero-section__button {
+        width: 120px;
+        margin-right: initial;
+    }
+}

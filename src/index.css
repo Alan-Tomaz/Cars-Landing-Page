@@ -133,3 +133,22 @@ img {
 .unfill--blue:hover {
     background-color: var(--color-secondary);
 }
+
+/* ============== MEDIA QUERIES =============== */
+/* Medium Devices = 1024 */
+
+@media screen and (max-width: 1024px) {
+    :root {
+        --hero-title: 2.3rem;
+        --hero-subtitle: 1rem;
+        --logo: 1.6rem
+    }
+}
+
+/* Small Devices = 600 */
+
+@media screen and (max-width:600px) {
+    .container {
+        padding: 0 .8rem;
+    }
+}
