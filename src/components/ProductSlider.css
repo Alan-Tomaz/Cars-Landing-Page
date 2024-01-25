@@ -70,3 +70,29 @@
 .stage--active {
     background-color: var(--color-secondary);
 }
+
+/* ============== MEDIA QUERIES =============== */
+/* Min = 1024 */
+
+@media screen and (max-width: 1024px) {}
+
+/* Min = 600 */
+
+@media screen and (max-width: 600px) {
+
+    .product-slider__box {
+        gap: .2rem;
+    }
+
+    .product-slider__slides {
+        width: 100%;
+    }
+
+    .product-slider__title {
+        text-align: center;
+    }
+
+    .product-slider__buttons {
+        flex-direction: column;
+    }
+}

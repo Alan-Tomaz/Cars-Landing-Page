@@ -37,6 +37,13 @@
     justify-content: space-evenly;
     font-weight: var(--font-bold);
     width: 50%;
+    position: relative;
+}
+
+.navbar__items-ul {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .navbar__item {
@@ -45,4 +52,91 @@
 
 .navbar__item:hover {
     text-decoration: underline 1px solid;
+}
+
+.sd-menu {
+    display: none;
+    font-size: 1.5rem;
+}
+
+/* ============== MEDIA QUERIES =============== */
+/* Min = 1024 */
+
+@media screen and (max-width: 1024px) {}
+
+/* Min = 600 */
+
+@media screen and (max-width: 600px) {
+
+    .logo {
+        gap: .5rem;
+    }
+
+    .navbar__items {
+        justify-content: end;
+    }
+
+    .menu-active {
+        display: initial;
+    }
+
+    .navbar__items-ul {
+        position: absolute;
+        flex-direction: column;
+        width: 200px;
+        top: 50px;
+        display: none;
+    }
+
+    .navbar__items-show {
+        display: flex;
+        animation: animateDropdown 400ms 0s ease forwards;
+        transform-origin: top;
+        opacity: 0;
+    }
+
+    .navbar__items-ul li {
+        background-color: var(--color-primary-variant);
+        box-shadow: -2px 2px 6px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar__items-ul li:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .navbar__items-ul li a {
+        padding: 1.4rem 1.4rem;
+        display: flex;
+    }
+
+    .navbar__items-show li:nth-child(2) {
+        animation-delay: 200ms;
+        perspective: 400px;
+    }
+
+    .navbar__items-show li:nth-child(3) {
+        animation-delay: 400ms;
+        perspective: 400px;
+    }
+
+    .navbar__items-show li:nth-child(4) {
+        animation-delay: 600ms;
+        perspective: 400px;
+    }
+
+    /* nav dropdown animation */
+    @keyframes animateDropdown {
+        0% {
+            transform: rotateX(90deg);
+        }
+
+        100% {
+            transform: rotateX(0deg);
+            opacity: 1;
+        }
+    }
+
+    .navbar__items-ul li a:hover {
+        text-decoration: none;
+    }
 }

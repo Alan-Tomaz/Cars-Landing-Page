@@ -141,7 +141,8 @@ img {
     :root {
         --hero-title: 2.3rem;
         --hero-subtitle: 1rem;
-        --logo: 1.6rem
+        --logo: 1.6rem;
+        --title: 2.5rem
     }
 }
 
@@ -150,5 +151,11 @@ img {
 @media screen and (max-width:600px) {
     .container {
         padding: 0 .8rem;
+    }
+
+    :root {
+
+
+        --title: 2.2rem
     }
 }

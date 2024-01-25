@@ -53,4 +53,29 @@
 }
 
 /* ============== MEDIA QUERIES =============== */
-/* Min =  */
+/* Min = 1024 */
+
+@media screen and (max-width: 1024px) {}
+
+/* Min = 600 */
+
+@media screen and (max-width: 600px) {
+    .section {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
+
+    .section__text {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .section__image {
+        width: 90%;
+        display: flex;
+        align-self: center;
+    }
+}

@@ -6,6 +6,9 @@ import Bmw from '../images/cars/bmw_m2.png';
 import './Product.css';
 
 function Product() {
+
+    const screenWidth = window.screen.width;
+
     return (
         <div className='product__page'>
             <section className='product__container container'>
@@ -19,18 +22,22 @@ function Product() {
                         </div>
                         <div className="other-images">
                             <MdNavigateBefore className='change-car' />
+                            {screenWidth > 1024 && (
+                                <div className="image">
+                                    <img src={Bmw} alt="Bmw" />
+                                </div>
+                            )}
+                            <div className="image">
+                                <img src={Bmw} alt="Bmw" />
+                            </div>
+
                             <div className="image">
                                 <img src={Bmw} alt="Bmw" />
                             </div>
                             <div className="image">
                                 <img src={Bmw} alt="Bmw" />
                             </div>
-                            <div className="image">
-                                <img src={Bmw} alt="Bmw" />
-                            </div>
-                            <div className="image">
-                                <img src={Bmw} alt="Bmw" />
-                            </div>
+
                             <MdNavigateNext className='change-car' />
                         </div>
                     </div>

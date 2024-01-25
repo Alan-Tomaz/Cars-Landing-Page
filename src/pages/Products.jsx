@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { MdNavigateNext } from "react-icons/md";
 import './Products.css';
 import { NumericFormat } from "react-number-format";
+import { FaFilter } from "react-icons/fa";
+
 
 function Products() {
 
@@ -21,6 +23,17 @@ function Products() {
     const [isFiltring, setIsFiltring] = useState();
 
     const [price, setPrice] = useState(10000);
+
+    const [isShowingFilters, setIsShowingFilters] = useState(false);
+
+    const openFilterSlider = () => {
+        if (isShowingFilters === false) {
+            setIsShowingFilters(true)
+        }
+        else {
+            setIsShowingFilters(false)
+        }
+    }
 
     const handleMouseEnter = (e) => {
         const div = e.currentTarget.innerHTML;
@@ -229,7 +242,8 @@ function Products() {
             <section className='products__section'>
                 <h3 className='products__section-title'>All Vehicles</h3>
                 <div className="products-container container">
-                    <div className="filters">
+                    <FaFilter className='filter-icon' onClick={openFilterSlider} />
+                    <div className={isShowingFilters == true ? "filters show-filters" : "filters"}>
                         <div className="filter filter__price">
                             <h6>Filter By Price</h6>
                             <input type="range" name="price-filter" id="price-filter" min={10000} max={1000000} step={100} onChange={handleChangePrice} />

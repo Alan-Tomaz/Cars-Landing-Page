@@ -30,17 +30,25 @@
 
 .img__box .other-images {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 1rem;
     align-items: center;
     margin-top: 1rem;
 }
 
 .img__box .other-images .change-car {
     font-size: 2rem;
+
 }
 
 .img__box .other-images .change-car:hover {
     cursor: pointer;
+}
+
+.other-images__images {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 .img__box .other-images .image {
@@ -155,4 +163,58 @@
     width: 1px;
     background-color: var(--text-color-variant);
     opacity: .2;
+}
+
+/* ============== MEDIA QUERIES =============== */
+/* Min = 1024 */
+
+@media screen and (max-width: 1024px) {
+    .product__information .datasheet {
+        width: 80%;
+    }
+
+    .img__box .other-images .image {
+        max-width: 75px;
+        max-height: 75px;
+        width: initial;
+        height: initial;
+        padding: .8rem .5rem;
+    }
+}
+
+/* Min = 600 */
+
+@media screen and (max-width: 600px) {
+
+    .img__box .other-images {
+        gap: .5rem;
+    }
+
+    .img__box .other-images .image {
+
+        width: 75px;
+        height: auto;
+        padding: 1rem .2rem;
+    }
+
+    .product__box {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .img__box {
+        width: 100%;
+    }
+
+    .vehicle__info {
+        width: 100%;
+    }
+
+    .vehicle__info .product__row {
+        width: 100%;
+    }
+
+    .product__information .datasheet {
+        align-items: flex-start;
+    }
 }

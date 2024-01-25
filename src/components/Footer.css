@@ -106,3 +106,33 @@
     font-size: 13px;
     opacity: .8;
 }
+
+/* ============== MEDIA QUERIES =============== */
+/* Min = 1024 */
+
+@media screen and (max-width: 1024px) {
+    .footer__links-box {
+        width: 60%;
+    }
+}
+
+/* Min = 600 */
+
+@media screen and (max-width: 600px) {
+
+    .footer {
+        padding-top: 50px;
+    }
+
+    .footer__upside {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5rem;
+    }
+
+    .footer__links-box {
+        gap: 5rem;
+        flex-direction: column;
+    }
+}
