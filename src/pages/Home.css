@@ -77,5 +77,6 @@
         width: 90%;
         display: flex;
         align-self: center;
+        margin-top: 4rem;
     }
 }
