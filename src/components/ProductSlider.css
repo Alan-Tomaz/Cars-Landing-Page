@@ -57,14 +57,20 @@
     visibility: hidden;
 }
 
-.swiper-button {
+.swiper-button-prev,
+.swiper-button-next {
     color: inherit !important;
-    opacity: .7 !important;
+    opacity: .8 !important;
     transition: var(--transition) !important;
 }
 
-.swiper-button:hover {
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
     opacity: 1 !important;
+}
+
+.swiper-button-disabled {
+    opacity: .3 !important;
 }
 
 .swiper-pagination-bullet {
@@ -116,7 +122,7 @@
     }
 
     .product-slider__slides img {
-        height: auto;
+        height: 250px;
         width: 80% !important;
     }
 
