@@ -34,6 +34,7 @@
 }
 
 .contact-us__form input[type=text],
+.contact-us__form input[type=email],
 .contact-us__form textarea {
     width: 100%;
     border-bottom: 1px solid var(--color-primary);
@@ -48,12 +49,14 @@
 }
 
 .contact-us__form input[type=text]::placeholder,
+.contact-us__form input[type=email]::placeholder,
 .contact-us__form textarea::placeholder {
     color: var(--text-color);
     opacity: .8;
 }
 
 .contact-us__form input[type=text]:focus,
+.contact-us__form input[type=email]:focus,
 .contact-us__form textarea:focus {
     border-bottom: 1px solid var(--color-secondary);
 }

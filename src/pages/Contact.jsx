@@ -1,11 +1,44 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Title from '../components/Title';
 import './Contact.css';
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
+import emailjs from '@emailjs/browser';
 
-function Contact() {
+function Contact({ notify }) {
+
+    const form = useRef();
+
+    const sendEmail = (e) => {
+
+        e.preventDefault();
+
+        if (document.getElementById('name-2').value && document.getElementById('email-2').value && document.getElementById('message-2').value) {
+            emailjs.sendForm(
+                //Your Service ID
+                'service_dq3725s',
+                //Your Template ID
+                'template_40lnnwq',
+                form.current,
+                //Your Publick Key
+                '2MmCIHTO8aXLchsBD')
+                .then((result) => {
+                    console.log('Message Sent:');
+                    console.log(result.text);
+                    notify('success', 'Email sent')
+                }, (error) => {
+                    console.log(error.text);
+                    notify('error', 'Error')
+                });
+
+            e.target.reset();
+        }
+        else {
+            notify('error', 'The form cannot contain empty fields')
+        }
+    };
+
     return (
         <div className='contact'>
             <Title title="CONTACT US" />
@@ -38,11 +71,11 @@ function Contact() {
                     <div className="contact-us__form">
                         <h3>Contact Us</h3>
                         <p>Fill out the form to contact us, or see our other contact methods. We'd love to help you!</p>
-                        <form >
-                            <input type="text" placeholder='Name' />
-                            <input type="text" placeholder='E-mail' />
-                            <textarea cols="30" rows="10" placeholder='Message'></textarea>
-                            <a className='button--blue contact-us__button-2'>Send</a>
+                        <form onSubmit={sendEmail} ref={form}>
+                            <input type="text" placeholder='Name' name='user_name' id='name-2' />
+                            <input type="email" placeholder='E-mail' name='user_email' id='email-2' />
+                            <textarea cols="30" rows="10" placeholder='Message' name='message' id='message-2'></textarea>
+                            <button type='submit' className='button--blue contact-us__button-2'>Send</button>
                         </form>
                     </div>
                 </div>
@@ -50,7 +83,7 @@ function Contact() {
             <section className="map-section">
                 <h3>Find us on Google Maps</h3>
                 <p>You can also come to one of our stores in person! We will love to welcome you</p>
-                <img src="https://t.ctcdn.com.br/TsDYMux-ZlhMhRe2LOni3S_3aTk=/1200x675/smart/i381158.jpeg" alt="" />
+                <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d46913.88522707928!2d-73.94694301642222!3d40.84914348078368!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1706404483537!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </section>
         </div>
     )

@@ -19,24 +19,24 @@ function Footer() {
                     </div>
                     <div className="footer__links-box">
                         <div className="footer__links">
-                            <Link to="">WEEBLY THEMES</Link >
-                            <Link to="">PRE-SALE FAOS</Link>
-                            <Link to="">SUBMIT A TICKET</Link>
-                        </div>
-                        <div className="footer__links">
-                            <Link to="">SERVICES</Link>
-                            <Link to="">THEME TWEAK</Link>
-                        </div>
-                        <div className="footer__links">
-                            <Link to="">SHOWCASE</Link>
-                            <Link to="">WIDGET TICKET</Link>
+                            <Link to="">PREFERENCES</Link >
+                            <Link to="">PRE-SALE VEHICLES</Link>
                             <Link to="">SUPPORT</Link>
                         </div>
                         <div className="footer__links">
-                            <Link to="">HOME</Link>
-                            <Link to="">ABOUT</Link>
-                            <Link to="">CONTACT</Link>
-                            <Link to="">PRODUCTS</Link>
+                            <Link to="">SERVICES</Link>
+                            <Link to="">TUNNING</Link>
+                        </div>
+                        <div className="footer__links">
+                            <Link to="">SHOWCASE</Link>
+                            <Link to="">BUY A CAR</Link>
+                            <Link to="">SUPPORT</Link>
+                        </div>
+                        <div className="footer__links">
+                            <Link to="/">HOME</Link>
+                            <Link to="/about">ABOUT</Link>
+                            <Link to="/contact">CONTACT</Link>
+                            <Link to="/products">PRODUCTS</Link>
                         </div>
                     </div>
                 </div>

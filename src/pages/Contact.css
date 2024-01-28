@@ -81,18 +81,25 @@
 
 .map-section h3 {
     font-size: var(--title);
+    text-align: center;
 }
 
-.map-section img {
-    width: 1024px;
+.map-section p {
+    text-align: center;
+}
+
+.map-section iframe {
+    width: 1000px;
+    height: 600px;
 }
 
 /* ============== MEDIA QUERIES =============== */
 /* Min = 1024 */
 
 @media screen and (max-width: 1024px) {
-    .map-section img {
+    .map-section iframe {
         width: 90%;
+        height: 500px;
     }
 }
 
@@ -120,5 +127,10 @@
 
     .map-section {
         padding: 70px 1rem;
+    }
+
+    .map-section iframe {
+        width: 95%;
+        height: 300px;
     }
 }

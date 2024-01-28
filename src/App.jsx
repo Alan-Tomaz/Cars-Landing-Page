@@ -8,18 +8,51 @@ import Products from './pages/Products';
 import Product from './pages/Product';
 import ContactUs from './components/ContactUs';
 import Footer from './components/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+
+  const notify = (type, text) => {
+    if (type == 'success') {
+      toast.success(text, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
+    }
+    else if (type == 'error') {
+      toast.error(text, {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      })
+    }
+
+  }
+
   return (
+
     <div className="App">
+
+
       <Router>
         <Navbar />
+        <ToastContainer position='top-center' autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         <Routes>
-          <Route path='/' element={[<Home />, <ContactUs />]} />
-          <Route path='/about' element={[<About />, <ContactUs />]} />
-          <Route path='/contact' element={[<Contact />]} />
-          <Route path='/products' element={[<Products />, <ContactUs />]} />
-          <Route path='/product/:id' element={[<Product />, <ContactUs />]} />
+          <Route path='/' element={[<Home />, <ContactUs notify={notify} />]} />
+          <Route path='/about' element={[<About />, <ContactUs notify={notify} />]} />
+          <Route path='/contact' element={[<Contact notify={notify} />]} />
+          <Route path='/products' element={[<Products />, <ContactUs notify={notify} />]} />
+          <Route path='/product/:id' element={[<Product />, <ContactUs notify={notify} />]} />
         </Routes>
         <Footer />
       </Router>
