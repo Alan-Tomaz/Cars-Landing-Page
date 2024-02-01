@@ -10,7 +10,7 @@ import ContactUs from './components/ContactUs';
 import Footer from './components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import instance from './components/axios';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
 
@@ -41,15 +41,11 @@ function App() {
   }
 
 
-
-  instance.get(`&model=m4`)
-    .then(response => console.log(response.data))
-
-
   return (
 
     <div className="App">
       <Router>
+        <ScrollToTop />
         <Navbar />
         <ToastContainer position='top-center' autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
         <Routes>
