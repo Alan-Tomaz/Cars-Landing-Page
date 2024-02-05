@@ -9,8 +9,6 @@ function VehicleCard({ id, model, make, price, rating, image }) {
 
     const [imageUrl, setImageUrl] = useState('');
 
-    console.log(`ID: ${id} Make: ${make}`)
-
     useEffect(() => {
         getDownloadURL(ref(storage, `vehicles_images/${image}`))
             .then((url) => {
@@ -20,7 +18,7 @@ function VehicleCard({ id, model, make, price, rating, image }) {
 
     return (
         <div className="product__item" id={id} key={id}>
-            <img src={imageUrl} alt={`${make} ${model}`} />
+            <img src={imageUrl} />
             <h6 className="product__brand">{`${make}`.toUpperCase()}</h6>
             <h5 className='product__name'>{`${make} ${model}`.toUpperCase()}</h5>
             <div className="product__ratings">

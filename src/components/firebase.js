@@ -1,5 +1,5 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 
@@ -7,9 +7,9 @@ const firebaseConfig = {
 
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db = firebaseApp.firestore();
+const db = getFirestore(app);
 
 // Create a reference with an initial file path and name
 const storage = getStorage();
