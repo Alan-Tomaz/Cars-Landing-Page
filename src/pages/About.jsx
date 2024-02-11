@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Title from '../components/Title';
 import ManAtNight from '../images/ManAtNight.jpeg';
 import Velocimeter from '../images/velocimeter.jpg';
@@ -10,8 +10,20 @@ import './About.css';
 import { Link } from 'react-router-dom';
 
 function About() {
+
+    const url = (window.location.href).split('#');
+    const myRef1 = useRef(null);
+    const myRef2 = useRef(null);
+
+    useEffect(() => {
+        if (url[1] == "about")
+            myRef1.current.scrollIntoView();
+        if (url[1] == "services")
+            myRef2.current.scrollIntoView();
+    }, [])
+
     return (
-        <div className='about'>
+        <div className='about' ref={myRef1}>
             <Title title="ABOUT US" id="about" />
             <section className='section' id='section-1'>
                 <div className='section-container container'>
@@ -56,7 +68,7 @@ function About() {
                 </div>
             </section>
             <section className='section' id='section-3'>
-                <div className="services-container">
+                <div className="services-container" ref={myRef2}>
                     <h3 id='services'>Services</h3>
                     <div className="services">
                         <div className="services__info">

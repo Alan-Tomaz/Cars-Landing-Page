@@ -47,7 +47,7 @@ function Home() {
                     <div className="section__text">
                         <h2>Tunning</h2>
                         <p>Our vehicle customization service offers a variety of options for you to personalize your car or motorcycle. We can paint your vehicle in any color you choose, add accessories such as wheels, spoilers and side skirts, or make mechanical modifications such as increasing engine power or installing a high-quality sound system. We can help you turn your vehicle into a dream come true.</p>
-                        <Link to="/products?filter=tunning" className='button--black section__button'>See Cars</Link>
+                        <Link to="/products?carsType=tunning&minPrice=5000&ratingsSelect=all&brands=&search=&page=1" className='button--black section__button'>See Cars</Link>
                     </div>
                 </section>
                 <div className="separator">
@@ -57,7 +57,7 @@ function Home() {
                     <div className="section__text">
                         <h2>Motorcycles</h2>
                         <p>We offer a variety of bikes to suit your needs, including sport bikes, touring bikes, adventure bikes, cross bikes and small displacement bikes. Our motorcycles have varying capacities, from 125 cc to over 1,000 cc. We can help you find the perfect bike for you.</p>
-                        <Link to="/products?motorcycles" className=' button--black section__button unfill--black'>See Motorcycles</Link>
+                        <Link to="/products?carsType=motorcycle&minPrice=5000&ratingsSelect=all&brands=&search=&page=1" className=' button--black section__button unfill--black'>See Motorcycles</Link>
                     </div>
                     <div className="section__image">
                         <img src={YamahaBike} alt="mercedes_benz" />

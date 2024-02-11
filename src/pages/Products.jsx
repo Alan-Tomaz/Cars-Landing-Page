@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Title from '../components/Title';
 import ProductSlider from '../components/ProductSlider';
 import { IoStarOutline } from "react-icons/io5";
@@ -12,7 +12,7 @@ import { NumericFormat } from "react-number-format";
 import { FaFilter } from "react-icons/fa";
 import { db } from '../components/firebase';
 import VehicleCard from '../components/VehicleCard';
-import { collection, doc, getCountFromServer, getDoc, getDocs, limit, orderBy, query, startAt, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, startAt, where } from 'firebase/firestore';
 
 
 function Products() {
@@ -22,25 +22,26 @@ function Products() {
     const timeoutDelay = 1000;
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const [globalParams, setGlobalParams] = useState('');
 
     const itemsPerPage = 12;
     const collectionRef = collection(db, 'vehicles');
     const relevantData = doc(db, 'relevant_data', 'unique_values');
 
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [search, setSearch] = useState(searchParams.get('search') == undefined ? '' : searchParams.get('search') == null ? '' : searchParams.get('search'));
     const [carType, setCarType] = useState(searchParams.get('carsType') == undefined ? 'all' : searchParams.get('carsType') == null ? 'all' : searchParams.get('carsType'));
-    const [filterMakers, setFilterMakers] = useState(searchParams.getAll('brands') == undefined ? [] : searchParams.getAll('brands') == null ? [] : searchParams.getAll('brands'));
+    const [filterMakers, setFilterMakers] = useState(searchParams.getAll('brands') == undefined ? [] : searchParams.getAll('brands') == null ? [] : searchParams.getAll('brands') == '' ? [] : searchParams.getAll('brands'));
     const [uniqueMakers, setUniqueMakers] = useState([]);
     const [pagesElem, setPagesElem] = useState([]);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(searchParams.get('page') == undefined ? 1 : searchParams.get('page') == null ? 1 : Number(searchParams.get('page')));
     const [vehiclesCount, setVehiclesCount] = useState('-');
     const [actualCount, setActualCount] = useState(1 + (page <= 1 ? 0 : (page - 1) * itemsPerPage));
     const [vehicles, setVehicles] = useState([])
     const [results, setResults] = useState(<img src={Loading} alt='Loading' className='loading' />);
-
     const [ratingSelect, setRatingSelect] = useState(searchParams.get('ratingsSelect') == undefined ? 'all' : searchParams.get('ratingsSelect') == null ? 'all' : searchParams.get('ratingsSelect'));
     const [price, setPrice] = useState(searchParams.get('minPrice') == undefined ? 5000 : searchParams.get('minPrice') == null ? 5000 : searchParams.get('minPrice'));
+
+    const [globalParams, setGlobalParams] = useState(`carsType=${carType}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${search}`);
 
     const [isShowingFilters, setIsShowingFilters] = useState(false);
 
@@ -61,21 +62,26 @@ function Products() {
         setPrice(e.target.value);
         timeouts.push(setTimeout(() => {
             setGlobalParams(`carsType=${carType}&minPrice=${e.target.value}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${search}`);
-            setSearchParams({ minPrice: e.target.value, carsType: carType, ratingsSelect: ratingSelect, brands: filterMakers });
-            setPage(1)
+            setSearchParams({ minPrice: e.target.value, carsType: carType, ratingsSelect: ratingSelect, brands: filterMakers, page: page });
+            setPage(1);
+            setActualCount(1);
         }, timeoutDelay));
     }
 
     const getVehicles = async () => {
-        window.scrollTo(0, 1500);
+        if (isFirstLoad == false) {
+            window.scrollTo(0, 1500);
+        } else {
+            setTimeout(() => {
+                setIsFirstLoad(false);
+            }, 2000);
+        }
 
         setResults(<img src={Loading} alt='Loading' className='loading' />);
         setVehicles([]);
 
         let q = query(collectionRef);
 
-        /*     q = query(q, where('model', '==', `%${search}%`))
- */
         if (filterMakers.length > 0) {
             q = query(q, where('make', 'in', filterMakers));
         }
@@ -89,10 +95,10 @@ function Products() {
             q = query(q, where('type', '==', carType));
         }
 
-        /*         q = query(q, orderBy('price'))*/
         q = query(q, orderBy('product_id'))
-        q = query(q, startAt(1 + (itemsPerPage * (page <= 1 ? 0 : page - 1))))
-        q = query(q, limit(itemsPerPage))
+        /*         q = query(q, orderBy('price'))*/
+        /*         q = query(q, startAt(1 + (itemsPerPage * (page <= 1 ? 0 : page - 1)))) */
+        /* q = query(q, limit(itemsPerPage)) */
         /* const q = query(collectionRef,  orderBy('product_id'), startAt(1 + (itemsPerPage * (page <= 1 ? 0 : page - 1))), limit(itemsPerPage)) */
 
         await getDocs(q).then((querySnapshot) => {
@@ -100,42 +106,62 @@ function Products() {
                 setResults(<p className='p-alert'>No vehicles found</p>)
             }
             else {
-                const newVehicles = querySnapshot.docs.filter((vehicle) => vehicle.data().price >= price)
+                let newVehicles = querySnapshot.docs.filter((vehicle) => vehicle.data().price >= price);
+                newVehicles = newVehicles.filter(vehicle => (`${vehicle.data().make} ${vehicle.data().model}`).includes(search.toLowerCase()));
+                if (ratingSelect != 'all') {
+                    newVehicles = newVehicles.filter(vehicle => vehicle.data().rating >= ratingSelect);
+                }
                 if (newVehicles.length == 0) {
                     setResults(<p className='p-alert'>No vehicles found</p>)
                 }
                 else {
-                    setVehicles(newVehicles);
+                    setVehiclesCount(newVehicles.length);
+                    if (newVehicles.length > itemsPerPage) {
+                        const initialIndex = 0 + ((page <= 1 ? itemsPerPage - 1 : itemsPerPage) * (page <= 1 ? 0 : page - 1));
+                        let newVehicles2 = newVehicles.filter((vehicle, index) => index >= initialIndex);
+                        if (newVehicles2.length > 0) {
+                            newVehicles2 = newVehicles2.filter((vehicle, index) => index < itemsPerPage);
+                            setVehicles(newVehicles2);
+                        }
+                        else {
+                            setResults(<p className='p-alert'>No vehicles found</p>)
+                        }
+                    }
+                    else {
+                        setVehicles(newVehicles);
+
+                    }
                 }
             }
         })
     }
 
-    const countRegisters = async () => {
-        const countSnapshot = await getCountFromServer(collectionRef);
+    const countRegisters = useCallback(() => {
 
-        const totalCount = countSnapshot.data().count;
-        setVehiclesCount(totalCount);
         const pages = [];
-        const pagesNum = Math.ceil(Number(totalCount) / itemsPerPage);
+        const pagesNum = Math.ceil(Number(vehiclesCount) / itemsPerPage);
+
 
         if (page > 1) {
-            pages.push(<Link to={`/products?${globalParams}`} key="prev" onClick={() => handlePage(page - 1)}><MdNavigateBefore />{`PREV`}</Link>);
+            pages.push(<Link to={`/products?${globalParams}&page=${page - 1}`} key="prev" onClick={() => handlePage(page - 1)}><MdNavigateBefore />{`PREV`}</Link>);
         }
 
         for (let i = Math.max(1, page - 3); i <= Math.min(pagesNum, page + 3); i++) {
-            pages.push(<Link to={`/products?${globalParams}`} key={i} className={page === i ? `page-active` : ``} onClick={() => handlePage(i)}>{i}</Link>);
+            pages.push(<Link to={`/products?${globalParams}&page=${i}`} key={i} className={page === i ? `page-active` : ``} onClick={() => handlePage(i)}>{i}</Link>);
         }
 
         if (page < pagesNum) {
-            pages.push(<Link to={`/products?${globalParams}`} key="next" onClick={() => handlePage(page + 1)}>{`NEXT `}<MdNavigateNext /></Link>);
+            pages.push(<Link to={`/products?${globalParams}&page=${page + 1}`} key="next" onClick={() => handlePage(page + 1)}>{`NEXT `}<MdNavigateNext /></Link>);
         }
 
         setPagesElem(pages);
-    }
+    }, [vehiclesCount, page])
 
     const handlePage = (newPage) => {
         setPage(newPage);
+        setGlobalParams(`carsType=${carType}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${search}`);
+        setSearchParams({ minPrice: price, carsType: carType, ratingsSelect: ratingSelect, brands: filterMakers, page: newPage });
+
         if (newPage > page) {
             setActualCount(1 + (itemsPerPage * (newPage - 1)));
         }
@@ -157,9 +183,10 @@ function Products() {
 
         setCarType(typeCar.toLowerCase());
         timeouts.push(setTimeout(() => {
-            setGlobalParams(`carsType=${typeCar.toLowerCase}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${search}`);
-            setSearchParams({ carsType: typeCar.toLowerCase(), minPrice: price, ratingsSelect: ratingSelect, brands: filterMakers });
-            setPage(1)
+            setGlobalParams(`carsType=${typeCar.toLowerCase()}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${search}`);
+            setSearchParams({ carsType: typeCar.toLowerCase(), minPrice: price, ratingsSelect: ratingSelect, brands: filterMakers, page: page });
+            setPage(1);
+            setActualCount(1);
         }, timeoutDelay));
     }
 
@@ -172,15 +199,18 @@ function Products() {
             setRatingSelect('all')
             timeouts.push(setTimeout(() => {
                 setGlobalParams(`carsType=${carType}&minPrice=${price}&ratingsSelect=all}&brands=${filterMakers}&search=${search}`);
-                setSearchParams({ ratingsSelect: 'all', minPrice: price, carsType: carType, brands: filterMakers })
+                setSearchParams({ ratingsSelect: 'all', minPrice: price, carsType: carType, brands: filterMakers, page: page })
                 setPage(1)
+                setActualCount(1);
             }, 2000));
         }
         else {
             setRatingSelect(rating);
             timeouts.push(setTimeout(() => {
                 setGlobalParams(`carsType=${carType}&minPrice=${price}&ratingsSelect=${rating}&brands=${filterMakers}&search=${search}`);
-                setSearchParams({ ratingsSelect: rating, minPrice: price, carsType: carType, brands: filterMakers })
+                setSearchParams({ ratingsSelect: rating, minPrice: price, carsType: carType, brands: filterMakers, page: page })
+                setPage(1)
+                setActualCount(1);
             }, timeoutDelay));
         }
     }
@@ -198,8 +228,9 @@ function Products() {
 
         timeouts.push(setTimeout(() => {
             setGlobalParams(`carsType=${carType}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${brands}`);
-            setSearchParams({ brands: brands, minPrice: price, carsType: carType, ratingsSelect: ratingSelect })
+            setSearchParams({ brands: brands, minPrice: price, carsType: carType, ratingsSelect: ratingSelect, page: page })
             setPage(1)
+            setActualCount(1);
         }, timeoutDelay));
 
     }
@@ -213,9 +244,10 @@ function Products() {
 
         setSearch(document.getElementById('search-input').value);
         timeouts.push(setTimeout(() => {
-            setGlobalParams(`carsType=${carType}&minPrice=${e.target.value}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${search}`);
-            setSearchParams({ search: document.getElementById('search-input').value, minPrice: price, ratingSelect: ratingSelect, brands: filterMakers });
+            setGlobalParams(`carsType=${carType}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${filterMakers}&search=${document.getElementById('search-input').value}`);
+            setSearchParams({ search: document.getElementById('search-input').value, minPrice: price, ratingSelect: ratingSelect, brands: filterMakers, page: page });
             setPage(1)
+            setActualCount(1);
         }, timeoutDelay));
     }
 
@@ -309,13 +341,12 @@ function Products() {
         /*  ================ DATABASE ================ */
         /* get vehicles */
         getVehicles();
-        /* get vehicles count */
         countRegisters();
         /* get cars manufactures */
         getMakers();
 
         document.getElementById('search-input').value = search;
-    }, [page, searchParams])
+    }, [page, searchParams, countRegisters])
 
     return (
         <div>
@@ -334,7 +365,7 @@ function Products() {
                         <div className="filter filter__ratings">
                             <h6>Ratings</h6>
                             <div className="ratings-box" >
-                                <div className="ratings rating-1" style={{ opacity: ratingSelect == 1 ? '1' : '.7' }} onClick={() => handleChangeRatings(1)}>
+                                <div className="ratings rating-1" style={{ opacity: ratingSelect == 1 ? '1' : '.7' }} onClick={() => handleChangeRatings(5)}>
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
@@ -344,7 +375,7 @@ function Products() {
                                 <span>(1)</span>
                             </div>
                             <div className="ratings-box" >
-                                <div className="ratings rating-2" style={{ opacity: ratingSelect == 2 ? '1' : '.7' }} onClick={() => handleChangeRatings(2)}>
+                                <div className="ratings rating-2" style={{ opacity: ratingSelect == 2 ? '1' : '.7' }} onClick={() => handleChangeRatings(4)}>
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
@@ -364,7 +395,7 @@ function Products() {
                                 <span>(1)</span>
                             </div>
                             <div className="ratings-box" >
-                                <div className="ratings rating-4" style={{ opacity: ratingSelect == 4 ? '1' : '.7' }} onClick={() => handleChangeRatings(4)}>
+                                <div className="ratings rating-4" style={{ opacity: ratingSelect == 4 ? '1' : '.7' }} onClick={() => handleChangeRatings(2)}>
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStarOutline className='rating' />
@@ -374,7 +405,7 @@ function Products() {
                                 <span>(1)</span>
                             </div>
                             <div className="ratings-box" >
-                                <div className="ratings rating-5" style={{ opacity: ratingSelect == 5 ? '1' : '.7' }} onClick={() => handleChangeRatings(5)}>
+                                <div className="ratings rating-5" style={{ opacity: ratingSelect == 5 ? '1' : '.7' }} onClick={() => handleChangeRatings(1)}>
                                     <IoStar className='rating' />
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
