@@ -107,6 +107,10 @@
     opacity: .8;
 }
 
+.copyright:hover {
+    text-decoration: underline 1px solid var(--text-color-variant);
+}
+
 /* ============== MEDIA QUERIES =============== */
 /* Min = 1024 */
 

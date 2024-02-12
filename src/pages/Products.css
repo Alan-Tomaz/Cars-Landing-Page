@@ -171,6 +171,10 @@
     transform: rotate(45deg);
 }
 
+.filters__button {
+    height: 40px;
+}
+
 .products {
     width: 100%;
     min-height: 1200px;

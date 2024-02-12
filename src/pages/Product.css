@@ -32,6 +32,63 @@
     position: relative;
 }
 
+.img__box .img-background .change-car-prev,
+.img__box .img-background .change-car-next {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    background-color: #38383825;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.img__box .img-background .change-car-prev {
+    left: 0;
+    justify-content: flex-start;
+    padding-left: 1rem;
+}
+
+.img__box .img-background .change-car-next {
+    right: 0;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+.img__box .img-background .change-car-prev .change-car-prev__icon,
+.img__box .img-background .change-car-next .change-car-next__icon {
+    width: 50px;
+    height: 50px;
+    color: var(--color-primary);
+}
+
+.img__box .img-background:hover .change-car-prev,
+.img__box .img-background:hover .change-car-next {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.img__box .img-background .change-car-prev:hover,
+.img__box .img-background .change-car-next:hover {
+    background-color: rgba(56, 56, 56, 0.329);
+}
+
+.img__box .img-background .change-car-prev:active,
+.img__box .img-background .change-car-next:active {
+    background-color: #38383893;
+}
+
+.img__box .img-background:hover .disabled {
+    opacity: .2 !important;
+}
+
+.other-images .disabled {
+    opacity: .2 !important;
+}
+
 .img__box .img-background .background-car {
     position: absolute;
     width: 80%;
@@ -40,6 +97,17 @@
     bottom: 5%;
     left: 10%;
     translate: (-50%, -50%);
+    transition: var(--transition);
+    opacity: 0;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.img__box .img-background .background-car-active {
+    opacity: 1;
 }
 
 .img__box .other-images {
@@ -48,16 +116,23 @@
     gap: 1rem;
     align-items: center;
     margin-top: 1rem;
+    min-height: 100px;
 }
 
 .img__box .other-images .change-car {
     font-size: 2rem;
-
+    transition: var(--transition);
 }
 
 .img__box .other-images .change-car:hover {
     cursor: pointer;
+    opacity: .7;
 }
+
+.img__box .other-images .change-car:active {
+    opacity: .1;
+}
+
 
 .other-images__images {
     display: flex;
@@ -72,7 +147,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg-color-variant);
+    background-color: #a1a1a1;
+    transition: var(--transition);
+    opacity: .6;
+}
+
+.img__box .other-images .image:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.img__box .other-images .image:active {
+    opacity: 1;
+}
+
+.img__box .other-images .image-active {
+    opacity: 1 !important;
+}
+
+.img__box .other-images .image-car {
+    transition: var(--transition);
+    opacity: 0;
+}
+
+.img__box .other-images .image-car-active {
+    opacity: 1;
 }
 
 .vehicle__info {
@@ -95,6 +194,13 @@
 .vehicle__info .vehicle__price {
     font-size: var(--subtitle);
     font-weight: var(--font-bold);
+}
+
+.vehicle__info .star-ratings-box {
+    display: flex;
+    gap: .5rem;
+    font-weight: var(--font-medium);
+    font-size: .8rem;
 }
 
 .vehicle__info .product__row {
@@ -157,12 +263,15 @@
     align-items: center;
 }
 
+.product__information .datasheet-motorcycle {
+    width: 50%;
+}
+
 .product__information .product__technique {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 40%;
-
 }
 
 .product__information .product__technique h6 {
@@ -177,10 +286,22 @@
 }
 
 .product__information .product__vertical-row {
-    height: 150px;
+    height: 200px;
     width: 1px;
     background-color: var(--text-color-variant);
     opacity: .2;
+}
+
+.product__information .product__vertical-row__car {
+    height: 200px;
+}
+
+.product__information .product__vertical-row__motorcycle {
+    height: 700px;
+}
+
+.product-horiontal-row {
+    display: none;
 }
 
 /* ============== MEDIA QUERIES =============== */
@@ -189,6 +310,11 @@
 @media screen and (max-width: 1024px) {
     .product__information .datasheet {
         width: 80%;
+    }
+
+
+    .img__box .img-background .background-car {
+        max-height: 200px;
     }
 
     .img__box .other-images .image {
@@ -206,14 +332,19 @@
 
     .img__box .other-images {
         gap: .5rem;
+        flex-wrap: wrap;
     }
 
     .img__box .other-images .image {
-
         width: 75px;
-        height: auto;
-        padding: 1rem .2rem;
+        height: 75px;
+        padding: .5rem .2rem;
     }
+
+    .img__box .other-images .image img {
+        max-height: 70px;
+    }
+
 
     .product__box {
         flex-direction: column;
@@ -233,6 +364,35 @@
     }
 
     .product__information .datasheet {
-        align-items: flex-start;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .product__information .datasheet .product__technique {
+        width: 100%;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .product__information .datasheet-motorcycle .product__technique {
+        text-align: initial;
+    }
+
+    .product__information .product__vertical-row {
+        display: none;
+    }
+
+    .product-horiontal-row {
+        display: block;
+        margin: 2rem 0rem;
+        width: 80%;
+        height: 1px;
+        border: none;
+        background-color: var(--text-color-variant);
+
+    }
+
+    .img__box .img-background .background-car {
+        max-height: 150px;
     }
 }

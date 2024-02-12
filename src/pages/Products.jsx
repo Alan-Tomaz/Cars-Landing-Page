@@ -12,7 +12,7 @@ import { NumericFormat } from "react-number-format";
 import { FaFilter } from "react-icons/fa";
 import { db } from '../components/firebase';
 import VehicleCard from '../components/VehicleCard';
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, startAt, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 
 function Products() {
@@ -27,6 +27,7 @@ function Products() {
     const collectionRef = collection(db, 'vehicles');
     const relevantData = doc(db, 'relevant_data', 'unique_values');
 
+    const [ratingsCount, setRatingsCount] = useState(['-', '-', '-', '-', '-'])
     const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [search, setSearch] = useState(searchParams.get('search') == undefined ? '' : searchParams.get('search') == null ? '' : searchParams.get('search'));
     const [carType, setCarType] = useState(searchParams.get('carsType') == undefined ? 'all' : searchParams.get('carsType') == null ? 'all' : searchParams.get('carsType'));
@@ -108,11 +109,13 @@ function Products() {
             else {
                 let newVehicles = querySnapshot.docs.filter((vehicle) => vehicle.data().price >= price);
                 newVehicles = newVehicles.filter(vehicle => (`${vehicle.data().make} ${vehicle.data().model}`).includes(search.toLowerCase()));
+                getRatingsCount(newVehicles);
                 if (ratingSelect != 'all') {
                     newVehicles = newVehicles.filter(vehicle => vehicle.data().rating >= ratingSelect);
                 }
                 if (newVehicles.length == 0) {
                     setResults(<p className='p-alert'>No vehicles found</p>)
+                    getRatingsCount(0);
                 }
                 else {
                     setVehiclesCount(newVehicles.length);
@@ -156,6 +159,20 @@ function Products() {
 
         setPagesElem(pages);
     }, [vehiclesCount, page])
+
+    const resetPage = () => {
+        setPrice('5000')
+        setCarType('all')
+        setRatingSelect('all');
+        setFilterMakers([]);
+        setSearch('');
+        setPage(1);
+        setActualCount(1);
+        setIsShowingFilters(false);
+        setGlobalParams(`carsType=all&minPrice=5000&ratingsSelect=all&brands=&search=`)
+        document.querySelector(".select-selected").innerHTML = 'All';
+        setSearchParams({ minPrice: 5000, carsType: 'all', ratingsSelect: 'all', brands: [], search: '', page: 1 });
+    }
 
     const handlePage = (newPage) => {
         setPage(newPage);
@@ -202,7 +219,7 @@ function Products() {
                 setSearchParams({ ratingsSelect: 'all', minPrice: price, carsType: carType, brands: filterMakers, page: page })
                 setPage(1)
                 setActualCount(1);
-            }, 2000));
+            }, timeoutDelay));
         }
         else {
             setRatingSelect(rating);
@@ -224,8 +241,8 @@ function Products() {
         document.querySelectorAll('.brand-input:checked').forEach((elem) => {
             brands.push(elem.value);
         })
-        setFilterMakers(brands);
 
+        setFilterMakers(brands);
         timeouts.push(setTimeout(() => {
             setGlobalParams(`carsType=${carType}&minPrice=${price}&ratingsSelect=${ratingSelect}&brands=${brands}`);
             setSearchParams({ brands: brands, minPrice: price, carsType: carType, ratingsSelect: ratingSelect, page: page })
@@ -249,6 +266,27 @@ function Products() {
             setPage(1)
             setActualCount(1);
         }, timeoutDelay));
+    }
+
+    const getRatingsCount = (vehicles) => {
+        if (vehicles == 0) {
+            setRatingsCount([0, 0, 0, 0, 0])
+        }
+        else {
+            const ratCount = [];
+            let ratiCount = [];
+            ratiCount = vehicles.filter(vehicle => Number(vehicle.data().rating) >= 1)
+            ratCount.push(ratiCount.length)
+            ratiCount = vehicles.filter(vehicle => Number(vehicle.data().rating) >= 2)
+            ratCount.push(ratiCount.length)
+            ratiCount = vehicles.filter(vehicle => Number(vehicle.data().rating) >= 3)
+            ratCount.push(ratiCount.length)
+            ratiCount = vehicles.filter(vehicle => Number(vehicle.data().rating) >= 4)
+            ratCount.push(ratiCount.length)
+            ratiCount = vehicles.filter(vehicle => Number(vehicle.data().rating) >= 5)
+            ratCount.push(ratiCount.length)
+            setRatingsCount(ratCount);
+        }
     }
 
     useEffect(() => {
@@ -365,24 +403,24 @@ function Products() {
                         <div className="filter filter__ratings">
                             <h6>Ratings</h6>
                             <div className="ratings-box" >
-                                <div className="ratings rating-1" style={{ opacity: ratingSelect == 1 ? '1' : '.7' }} onClick={() => handleChangeRatings(5)}>
+                                <div className="ratings rating-1" style={{ opacity: ratingSelect == 5 ? '1' : '.7' }} onClick={() => handleChangeRatings(5)}>
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                 </div>
-                                <span>(1)</span>
+                                <span>({ratingsCount[4]})</span>
                             </div>
                             <div className="ratings-box" >
-                                <div className="ratings rating-2" style={{ opacity: ratingSelect == 2 ? '1' : '.7' }} onClick={() => handleChangeRatings(4)}>
+                                <div className="ratings rating-2" style={{ opacity: ratingSelect == 4 ? '1' : '.7' }} onClick={() => handleChangeRatings(4)}>
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStarOutline className='rating' />
                                 </div>
-                                <span>(1)</span>
+                                <span>({ratingsCount[3]})</span>
                             </div>
                             <div className="ratings-box" >
                                 <div className="ratings rating-3" style={{ opacity: ratingSelect == 3 ? '1' : '.7' }} onClick={() => handleChangeRatings(3)}>
@@ -392,27 +430,27 @@ function Products() {
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
                                 </div>
-                                <span>(1)</span>
+                                <span>({ratingsCount[2]})</span>
                             </div>
                             <div className="ratings-box" >
-                                <div className="ratings rating-4" style={{ opacity: ratingSelect == 4 ? '1' : '.7' }} onClick={() => handleChangeRatings(2)}>
+                                <div className="ratings rating-4" style={{ opacity: ratingSelect == 2 ? '1' : '.7' }} onClick={() => handleChangeRatings(2)}>
                                     <IoStar className='rating' />
                                     <IoStar className='rating' />
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
                                 </div>
-                                <span>(1)</span>
+                                <span>({ratingsCount[1]})</span>
                             </div>
                             <div className="ratings-box" >
-                                <div className="ratings rating-5" style={{ opacity: ratingSelect == 5 ? '1' : '.7' }} onClick={() => handleChangeRatings(1)}>
+                                <div className="ratings rating-5" style={{ opacity: ratingSelect == 1 ? '1' : '.7' }} onClick={() => handleChangeRatings(1)}>
                                     <IoStar className='rating' />
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
                                     <IoStarOutline className='rating' />
                                 </div>
-                                <span>(1)</span>
+                                <span>({ratingsCount[0]})</span>
                             </div>
                         </div>
                         <div className="filter filter__brands">
@@ -424,6 +462,7 @@ function Products() {
                                 </label>
                             ))}
                         </div>
+                        <button onClick={resetPage} className="button--black filters__button unfill--black">Clear Filters</button>
                     </div>
                     <div className="products">
                         <div className="products__search ">
@@ -448,7 +487,7 @@ function Products() {
                         </div>
                         <div className="products__list">
                             {vehicles.length > 0 ? vehicles.map((element) => (
-                                <VehicleCard id={element.id} key={element.id} model={element.data().model} make={element.data().make} image={element.data().image_small} price={element.data().price} rating={element.data().rating} />
+                                <VehicleCard id={element.id} key={element.id} model={element.data().model} make={element.data().make} image={element.data().image_small} price={element.data().price} rating={element.data().rating} type={element.data().type} />
                             )) :
                                 results
 

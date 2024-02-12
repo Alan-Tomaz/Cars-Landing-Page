@@ -14,12 +14,12 @@ function ContactUs({ notify, bgColor = "#cbcbcb" }) {
         if (document.getElementById('name').value && document.getElementById('email').value && document.getElementById('message').value) {
             emailjs.sendForm(
                 //Your Service ID
-                'service_dq3725s',
+                '',
                 //Your Template ID
-                'template_40lnnwq',
+                '',
                 form.current,
-                //Your Publick Key
-                '2MmCIHTO8aXLchsBD')
+                //Your Public Key
+                '')
                 .then((result) => {
                     console.log('Message Sent:');
                     console.log(result.text);

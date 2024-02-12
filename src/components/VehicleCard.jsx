@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import StarRatings from 'react-star-ratings'
 import { storage } from './firebase';
 
-function VehicleCard({ id, model, make, price, rating, image }) {
+function VehicleCard({ id, model, make, price, rating, image, type }) {
 
     const [imageUrl, setImageUrl] = useState('');
 
@@ -20,7 +20,7 @@ function VehicleCard({ id, model, make, price, rating, image }) {
         <div className="product__item" id={id} key={id}>
             <img src={imageUrl} />
             <h6 className="product__brand">{`${make}`.toUpperCase()}</h6>
-            <h5 className='product__name'>{`${make} ${model}`.toUpperCase()}</h5>
+            <h5 className='product__name'>{`${make} ${model}`.toUpperCase()} {type == 'tunning' ? '(CUSTOMIZED)' : ''}</h5>
             <div className="product__ratings">
                 <StarRatings
                     rating={Number(rating)}

@@ -56,7 +56,7 @@ function Footer() {
                             <MdEmail className='footer__social-media' />
                         </a>
                     </div>
-                    <p className='footer__copy'>&copy; Copyright. All rights reserved</p>
+                    <p className='footer__copy'>&copy; <a className='copyright' href="https://github.com/Alan-Tomaz">Alan Tomaz</a>. All rights reserved</p>
                 </div>
             </div>
         </div>

@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { TfiMenuAlt } from "react-icons/tfi";
 import { IoClose } from "react-icons/io5";
-
 import "./Navbar.css";
 import '../index.css';
 import logo from "../images/logo.png";
@@ -10,15 +9,24 @@ import { Link } from 'react-router-dom';
 function Navbar() {
 
     const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+    const navbarRef = useRef(null);
 
     const toggleNavbar = () => {
-        if (!isNavbarOpen) {
-            setIsNavbarOpen(true)
+        setIsNavbarOpen(!isNavbarOpen);
+    };
+
+    const closeNavbar = (event) => {
+        if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+            setIsNavbarOpen(false);
         }
-        else {
-            setIsNavbarOpen(false)
-        }
-    }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', closeNavbar);
+        return () => {
+            document.removeEventListener('mousedown', closeNavbar);
+        };
+    }, []);
 
     return (
         <nav className='navbar'>
@@ -30,11 +38,11 @@ function Navbar() {
                     </div>
                 </Link>
 
-                <div className="navbar__items">
-                    {isNavbarOpen === false ? (
-                        <TfiMenuAlt className={isNavbarOpen == false ? 'sd-menu menu-active' : 'sd-menu'} id='open' onClick={toggleNavbar} />
-                    ) : (
+                <div className="navbar__items" ref={navbarRef}>
+                    {isNavbarOpen ? (
                         <IoClose className={isNavbarOpen == true ? 'sd-menu menu-active' : 'sd-menu'} id='close' onClick={toggleNavbar} />
+                    ) : (
+                        <TfiMenuAlt className={isNavbarOpen == false ? 'sd-menu menu-active' : 'sd-menu'} id='open' onClick={toggleNavbar} />
                     )
                     }
                     <ul className={isNavbarOpen == true ? 'navbar__items-ul navbar__items-show' : 'navbar__items-ul'} >
